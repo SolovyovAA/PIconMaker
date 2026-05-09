@@ -3,13 +3,11 @@
 
 PIconMakerWnd::PIconMakerWnd(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::PIconMakerWnd)
-{
+    , ui(new Ui::PIconMakerWnd){
     ui->setupUi(this);
 }
 
-PIconMakerWnd::~PIconMakerWnd()
-{
+PIconMakerWnd::~PIconMakerWnd(){
     delete ui;
 }
 
