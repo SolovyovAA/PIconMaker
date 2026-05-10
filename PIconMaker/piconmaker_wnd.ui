@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="rsc.qrc">
-    <normaloff>:/icons/resources/icons/icon.ico</normaloff>:/icons/resources/icons/icon.ico</iconset>
+    <normaloff>:/icons/resources/icons/icon.png</normaloff>:/icons/resources/icons/icon.png</iconset>
   </property>
   <widget class="ListedWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
