@@ -17,6 +17,7 @@ ListedWidget::ListedWidget(QWidget *parent) :
 
     connect( ui->w_iconsList, &QListWidget::currentItemChanged, this, &ListedWidget::onListIndexChanged );
 
+    setButtonEnabled( !m_imagesList.isEmpty() );
 }
 
 ListedWidget::~ListedWidget(){
@@ -36,6 +37,8 @@ void ListedWidget::onLoadClicked(){
                 // TODO: inc
             }
         }
+
+        setButtonEnabled( !m_imagesList.isEmpty() );
     }
     // TODO: fail signal
 }
@@ -48,12 +51,17 @@ void ListedWidget::onClearClicked(){
     if( !m_imagesList.isEmpty() ){
         m_imagesList.clear();
         ui->w_iconsList->clear();
+
+        ui->w_icon->clear();
+        setButtonEnabled( false );
     }
 }
 
 void ListedWidget::onListIndexChanged( QListWidgetItem *item ){
-    QSize curRowSize = m_imagesList.at( ui->w_iconsList->currentRow() ).size();
-    ui->w_icon->setPixmap( QPixmap( item->icon().pixmap( curRowSize ) ) );
+    if( !m_imagesList.isEmpty() ){
+        QSize curRowSize = m_imagesList.at( ui->w_iconsList->currentRow() ).size();
+        ui->w_icon->setPixmap( QPixmap( item->icon().pixmap( curRowSize ) ) );
+    }
 }
 
 bool ListedWidget::loadByPath( const QString &path ){
@@ -64,11 +72,19 @@ bool ListedWidget::loadByPath( const QString &path ){
         QPixmap tmpPxMp;
         tmpPxMp.convertFromImage( tmp );
         QListWidgetItem *item = new QListWidgetItem( QIcon( tmpPxMp ), QString( "%1x%2" ).arg( tmp.width() ).arg( tmp.height() ) );
-        item->setSizeHint( QSize( ui->w_iconsList->viewport()->width(), 120 ) );
+        item->setSizeHint( QSize( ui->w_iconsList->viewport()->width() - 30, 120 ) );
         ui->w_iconsList->addItem( item );
 
         return true;
     }
 
     return false;
+}
+
+void ListedWidget::setButtonEnabled( bool enabled ){
+    ui->btn_save->setEnabled( enabled );
+    ui->btn_remove->setEnabled( enabled );
+    ui->btn_clear->setEnabled( enabled );
+
+    emit buttonsEnableStatusChanged( enabled );
 }

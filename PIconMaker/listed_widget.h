@@ -20,6 +20,8 @@ public:
     explicit ListedWidget(QWidget *parent = nullptr);
     ~ListedWidget();
 
+    Q_SIGNAL void buttonsEnableStatusChanged( bool enabled );
+
 private:
     Q_SLOT void onLoadClicked();
     Q_SLOT void onSaveClicked();
@@ -28,6 +30,7 @@ private:
     Q_SLOT void onListIndexChanged( QListWidgetItem *item );
 
     bool loadByPath( const QString &path );
+    void setButtonEnabled( bool enabled );
 
     Ui::ListedWidget *ui;
 
