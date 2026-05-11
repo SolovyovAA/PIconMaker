@@ -28,8 +28,7 @@ ListedWidget::~ListedWidget(){
 void ListedWidget::onLoadClicked(){
     QFileDialog loadDlg( this, tr( "Загрузить картинки" ) );
     loadDlg.setFileMode( QFileDialog::FileMode::ExistingFiles );
-    loadDlg.setNameFilter( "Доступные типы картинок (*.png, *.bmp, *.jpg)" ); // TODO: fix
-    loadDlg.setNameFilters( { "*.png", "*.bmp", "*.ico" } );
+    loadDlg.setNameFilter( "Доступные типы картинок (*.png *.bmp *.jpg)" );
 
     if( loadDlg.exec() ){
         QStringList pathes = loadDlg.selectedFiles();
