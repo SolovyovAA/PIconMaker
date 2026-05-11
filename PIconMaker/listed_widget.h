@@ -2,7 +2,7 @@
 #define LISTED_WIDGET_H
 
 #include <QWidget>
-#include <QList>
+//#include <QList>
 #include <QImage>
 #include <QString>
 
@@ -25,6 +25,7 @@ public:
 private:
     Q_SLOT void onLoadClicked();
     Q_SLOT void onSaveClicked();
+    Q_SLOT void onRemoveClicked();
     Q_SLOT void onClearClicked();
 
     Q_SLOT void onListIndexChanged( QListWidgetItem *item );
@@ -34,7 +35,7 @@ private:
 
     Ui::ListedWidget *ui;
 
-    QList< QImage > m_imagesList;
+//    QList< QImage > m_imagesList;
 };
 
 #endif // LISTED_WIDGET_H
