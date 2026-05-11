@@ -9,11 +9,14 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ico_worker.cpp \
     listed_widget.cpp \
     main.cpp \
     piconmaker_wnd.cpp
 
 HEADERS += \
+    ico_data.h \
+    ico_worker.h \
     listed_widget.h \
     piconmaker_wnd.h
 

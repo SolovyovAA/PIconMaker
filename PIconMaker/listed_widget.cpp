@@ -5,6 +5,9 @@
 #include <QStringList>
 #include <QIcon>
 #include <QPixmap>
+#include <QList>
+
+#include "ico_worker.h"
 
 ListedWidget::ListedWidget(QWidget *parent) :
     QWidget(parent),
@@ -28,9 +31,9 @@ ListedWidget::~ListedWidget(){
 void ListedWidget::onLoadClicked(){
     QFileDialog loadDlg( this, tr( "Загрузить картинки" ) );
     loadDlg.setFileMode( QFileDialog::FileMode::ExistingFiles );
-    loadDlg.setNameFilter( "Доступные типы картинок (*.png *.bmp *.jpg)" );
+    loadDlg.setNameFilter( tr( "Доступные типы картинок (*.png *.bmp *.jpg)" ) );
 
-    if( loadDlg.exec() ){
+    if( loadDlg.exec() == QFileDialog::Accepted ){
         QStringList pathes = loadDlg.selectedFiles();
         for( const auto &file : qAsConst( pathes ) ){
             if( !loadByPath( file ) ){
@@ -49,6 +52,40 @@ void ListedWidget::onLoadClicked(){
 }
 
 void ListedWidget::onSaveClicked(){
+//        QImage img16(":/res/icon.png");
+//        QImage img32(":/res/icon.png");
+//        QImage img48(":/res/icon.png");
+
+//        // Ресайзим под нужные размеры
+//        img16 = img16.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+//        img32 = img32.scaled(32, 32, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+//        img48 = img48.scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+        QList< QImage > imgList;
+        for( int i = 0; i < ui->w_iconsList->count(); i++ ){
+            QListWidgetItem *item = ui->w_iconsList->item( i );
+            if( item ){
+                QImage img = item->data( Qt::UserRole ).value< QImage >();
+                if( !img.isNull() ){
+                    imgList.append( img );
+                }
+            }
+        }
+
+        if( !imgList.isEmpty() ){
+            QFileDialog saveDlg( this, tr( "Сохранение иконки..." ) );
+            saveDlg.setAcceptMode(QFileDialog::AcceptSave);
+            saveDlg.setNameFilter( tr( "ICON (*.ico)" ) );
+            saveDlg.setDefaultSuffix( "ico" );
+            if( saveDlg.exec() == QDialog::Accepted ){
+                QString save = saveDlg.selectedFiles().value( 0 );
+                if( saveIco( save, imgList ) ){
+                    // TODO: signal
+                } else {
+                    // TODO: signal
+                }
+            }
+        }
 
 }
 
