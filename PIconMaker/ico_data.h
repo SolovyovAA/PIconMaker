@@ -32,4 +32,13 @@ struct BITMAPINFOHEADER {
     quint32 biClrImportant;
 };
 
+// Перечень стандартных размеров
+const QVector< QSize > kIconSizes {
+    {16, 16},
+    {24, 24},
+    {32, 32},
+    {48, 48},
+    {256, 256},
+    {512, 512}
+};
 #pragma pack(pop)
