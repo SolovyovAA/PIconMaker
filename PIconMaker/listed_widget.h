@@ -1,7 +1,8 @@
 #ifndef LISTED_WIDGET_H
 #define LISTED_WIDGET_H
 
-#include <QWidget>
+// #include <QWidget>
+#include "abstract_widget.h"
 //#include <QList>
 #include <QImage>
 #include <QString>
@@ -13,14 +14,14 @@ namespace Ui {
 class ListedWidget;
 }
 
-class ListedWidget : public QWidget {
+class ListedWidget : public AbstractWidget {
     Q_OBJECT
 
 public:
     explicit ListedWidget(QWidget *parent = nullptr);
     ~ListedWidget();
 
-    Q_SIGNAL void buttonsEnableStatusChanged( bool enabled );
+    // Q_SIGNAL void buttonsEnableStatusChanged( bool enabled );
 
 private:
     Q_SLOT void onLoadClicked();

@@ -7,12 +7,14 @@
 #include <QPixmap>
 #include <QList>
 
-#include "ico_worker.h"
-
 ListedWidget::ListedWidget(QWidget *parent) :
-    QWidget(parent),
+    AbstractWidget(parent),
     ui(new Ui::ListedWidget){
     ui->setupUi(this);
+
+    connect( this, &AbstractWidget::fromMainClearClicked, this, &ListedWidget::onClearClicked );
+    connect( this, &AbstractWidget::fromMainSaveClicked,  this, &ListedWidget::onSaveClicked  );
+    connect( this, &AbstractWidget::fromMainOpenClicked,  this, &ListedWidget::onLoadClicked  );
 
     connect( ui->btn_add,    &QPushButton::clicked, this, &ListedWidget::onLoadClicked   );
     connect( ui->btn_remove, &QPushButton::clicked, this, &ListedWidget::onRemoveClicked );
@@ -37,9 +39,8 @@ void ListedWidget::onLoadClicked(){
         QStringList pathes = loadDlg.selectedFiles();
         for( const auto &file : qAsConst( pathes ) ){
             if( !loadByPath( file ) ){
-                // TODO: inc
+                emit showMessage( tr( "Во время загрузки изображения (%1) возникла ошибка" ).arg( file ) );
             }
-
         }
 
         if( ui->w_iconsList->count() > 0 ){
@@ -48,19 +49,9 @@ void ListedWidget::onLoadClicked(){
 
         setButtonEnabled( ui->w_iconsList->count() > 0 );
     }
-    // TODO: fail signal
 }
 
 void ListedWidget::onSaveClicked(){
-//        QImage img16(":/res/icon.png");
-//        QImage img32(":/res/icon.png");
-//        QImage img48(":/res/icon.png");
-
-//        // Ресайзим под нужные размеры
-//        img16 = img16.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//        img32 = img32.scaled(32, 32, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//        img48 = img48.scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
         QList< QImage > imgList;
         for( int i = 0; i < ui->w_iconsList->count(); i++ ){
             QListWidgetItem *item = ui->w_iconsList->item( i );
@@ -79,11 +70,7 @@ void ListedWidget::onSaveClicked(){
             saveDlg.setDefaultSuffix( "ico" );
             if( saveDlg.exec() == QDialog::Accepted ){
                 QString save = saveDlg.selectedFiles().value( 0 );
-                if( saveIco( save, imgList ) ){
-                    // TODO: signal
-                } else {
-                    // TODO: signal
-                }
+                emit saveIcon( save, imgList );
             }
         }
 
