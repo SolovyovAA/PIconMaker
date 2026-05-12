@@ -77,8 +77,8 @@ bool saveIco( const QString &path, const QList< QImage > &images ){
 
     for (int i = 0; i < images.size(); ++i) {
         const QImage &img = images[i];
-        if (img.width() > 256 || img.height() > 256 || img.width() < 1 || img.height() < 1) {
-            // можно пропустить некорректные размеры или ресайзить
+        if (img.width() > 512 || img.height() > 512 || img.width() < 1 || img.height() < 1) {
+            // TODO: Можно пропустить некорректные размеры или ресайзить
             continue;
         }
 
@@ -99,7 +99,7 @@ bool saveIco( const QString &path, const QList< QImage > &images ){
     }
 
     // Пишем ICONDIRENTRY
-    for (const auto &e : entries)
+    for (const auto &e : qAsConst(entries))
         s.writeRawData(reinterpret_cast<const char*>(&e), sizeof(e));
 
     // Пишем BMP‑блоки
@@ -107,4 +107,25 @@ bool saveIco( const QString &path, const QList< QImage > &images ){
         s.writeRawData(b.constData(), b.size());
 
     return true;
+}
+
+QList< QImage > makeIconSetFromOne( const QImage &source ){
+    QList< QImage > result;
+
+    if ( source.isNull() )
+        return result;
+
+    // Если исходник маленький, делаем его 512×512 как основу
+    QImage src = source;
+    if ( src.width() < 512 || src.height() < 512 ) {
+        src = src.scaled( 512, 512, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    }
+
+    for ( const QSize &sz : qAsConst( kIconSizes ) ){
+        QImage img = src.scaled( sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        // можно улучшить фильтр, например Qt::SmoothTransformation или Qt::TransformationMode::SmoothTransformation
+        result.append( img );
+    }
+
+    return result;
 }
