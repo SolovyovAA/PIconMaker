@@ -4,5 +4,6 @@
         <file>resources/icons/icon.png</file>
         <file>resources/icons/remove.png</file>
         <file>resources/icons/save.png</file>
+        <file>resources/icons/empty.png</file>
     </qresource>
 </RCC>
