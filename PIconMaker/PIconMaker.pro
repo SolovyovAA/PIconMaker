@@ -10,19 +10,25 @@ CONFIG += c++11
 
 SOURCES += \
     ico_worker.cpp \
+    icon_button.cpp \
     listed_widget.cpp \
     main.cpp \
-    piconmaker_wnd.cpp
+    piconmaker_wnd.cpp \
+    scaled_widget.cpp
 
 HEADERS += \
     ico_data.h \
     ico_worker.h \
+    icon_button.h \
     listed_widget.h \
-    piconmaker_wnd.h
+    piconmaker_wnd.h \
+    scaled_widget.h
 
 FORMS += \
+    icon_button.ui \
     listed_widget.ui \
-    piconmaker_wnd.ui
+    piconmaker_wnd.ui \
+    scaled_widget.ui
 
 TRANSLATIONS += \
     PIconMaker_ru_RU.ts
