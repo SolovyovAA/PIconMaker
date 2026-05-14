@@ -14,8 +14,11 @@ PIconMakerWnd::PIconMakerWnd( QWidget *parent )
     m_btnGroup.addButton( ui->btn_listed, AppType::AT_Listed );
     m_btnGroup.addButton( ui->btn_scaled, AppType::AT_Scaled );
 
-    // connect( &m_btnGroup, QOverload< int >::of( &QButtonGroup::buttonClicked ), this, &PIconMakerWnd::onBtnClicked );
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     connect( &m_btnGroup, QOverload< int >::of( &QButtonGroup::idClicked ), this, &PIconMakerWnd::onBtnClicked );
+#elif QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    connect( &m_btnGroup, QOverload< int >::of( &QButtonGroup::buttonClicked ), this, &PIconMakerWnd::onBtnClicked );
+#endif
 
     ui->menubar->addAction( ui->act_about );
     connect( ui->act_about, &QAction::triggered, &m_aboutDlg, &AboutDialog::show );
