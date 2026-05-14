@@ -3,11 +3,11 @@
 
 #include <QObject>
 
-class Updater : public QObject
-{
+class Updater : public QObject {
     Q_OBJECT
 public:
-    explicit Updater(QObject *parent = nullptr);
+    explicit Updater( QObject *parent = nullptr );
+    ~Updater() = default;
 
 signals:
 };

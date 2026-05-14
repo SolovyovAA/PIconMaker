@@ -7,8 +7,14 @@
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 
+    a.setWindowIcon( QIcon( ":/icons/resources/icons/icon.png" ) );
     a.setApplicationName( "PIconMaker" );
-    a.setApplicationVersion( "0.1a" );
+    // a.setApplicationVersion( "0.1a" );
+    {
+        #define STR(x) #x
+        #define XSTR(x) STR(x)
+        a.setApplicationVersion( XSTR(VERSION) );
+    }
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
