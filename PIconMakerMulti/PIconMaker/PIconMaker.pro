@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     piconmaker_wnd.cpp \
     scaled_widget.cpp \
+    settings.cpp \
     updater.cpp
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     listed_widget.h \
     piconmaker_wnd.h \
     scaled_widget.h \
+    settings.h \
     updater.h
 
 FORMS += \
